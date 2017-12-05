@@ -4,7 +4,7 @@ using OpenQA.Selenium.Support.PageObjects;
 
 namespace CustomMethodsForControls
 {
-    class LoginPageObject
+    public class LoginPageObject
     {
          
 

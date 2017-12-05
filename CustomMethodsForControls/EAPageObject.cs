@@ -8,7 +8,7 @@ using OpenQA.Selenium.Support.PageObjects;
 
 namespace CustomMethodsForControls
 {
-    class EAPageObject
+    public class EAPageObject
     {
         DataEntry dataentry = new DataEntry();
 
