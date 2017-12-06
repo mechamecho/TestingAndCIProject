@@ -6,8 +6,6 @@ namespace CustomMethodsForControls
 {
     public class LoginPageObject
     {
-         
-
         public LoginPageObject()
         {
 
@@ -15,8 +13,6 @@ namespace CustomMethodsForControls
             
 
         }
-
-
 
         [FindsBy(How=How.Name, Using ="UserName")]
         public IWebElement TxtUserName { get; set; }
@@ -29,9 +25,14 @@ namespace CustomMethodsForControls
 
         public EAPageObject Login(string UserName, string Password)
         {
-            //had console outputs here for debugginh
+            FillLoginForm(UserName, Password);
+            return ClickLoginBtn();
+            
+        }
+
+        public void FillLoginForm(string UserName, string Password)
+        {
             DataEntry dataentry = new DataEntry();
-            //Here too
 
             //UserName
             //Extension Methods
@@ -40,28 +41,23 @@ namespace CustomMethodsForControls
             //Password
             TxtPassWord.EnterText(Password);
 
-
-
             //To get the username, we entered
             string UsernameText = TxtUserName.GetText();
 
-
-
             //To get the password we entered
-            string PasswordText=TxtPassWord.GetText();
-
-
-
+            string PasswordText = TxtPassWord.GetText();
 
             dataentry.PopulateLoginTable(UsernameText, PasswordText);
-            
 
+
+
+        }
+
+        public EAPageObject ClickLoginBtn()
+        {
             //Click button
             BtnLogin.Submit();
-
-            //To Navotagte to the HomePage, returns an instance of it
             return new EAPageObject();
-            
         }
     }
 }
