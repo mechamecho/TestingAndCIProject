@@ -191,11 +191,13 @@ namespace CustomMethodsForControls.Tests
 
         public void FillUserForm_SetLangugae_LanguageIsCorrectEnglish(string firstlanguage, string secondlanguage)
         {
+            languages[0] = firstlanguage;
+            languages[1] = secondlanguage;
             EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
             eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan" , "Female", languages);
             Console.WriteLine("Filled out the User information form and submitted");
-            if (firstlanguage.ToLower().Equals("english"))
+            if (languages[0].ToLower().Equals("english"))
             {
                 Console.WriteLine("Asserting that if the languages array contains english, "+
                     "the english checkbox must be selected");
@@ -223,10 +225,12 @@ namespace CustomMethodsForControls.Tests
 
         public void FillUserForm_SetLanguage_LanguageIsCorrectHindi(string firstlanguage, string secondlanguage)
         {
+            languages[0] = firstlanguage;
+            languages[1] = secondlanguage;
             EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
             eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan", "Female", languages);
 
-            if (secondlanguage.ToLower().Equals("hindi"))
+            if (languages[1].ToLower().Equals("hindi"))
             {
                 Console.WriteLine("Asserting that if the languages array contains hindi, " +
     "the hindi checkbox must be selected");
