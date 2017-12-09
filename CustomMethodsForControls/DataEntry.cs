@@ -1,4 +1,6 @@
-﻿using System.Data.SqlClient;
+﻿using System.Collections.Generic;
+using System.Data.SqlClient;
+
 
 
 namespace CustomMethodsForControls
@@ -11,9 +13,7 @@ namespace CustomMethodsForControls
         }
 
          SqlConnection connection;
-        //string ConnectionString = ConfigurationManager.ConnectionStrings[@"CustomMethodsForControls.Properties.Settings.InputTestingConnectionString"].ConnectionString;
          string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Engineer\Desktop\TestingAndCIProject\CustomMethodsForControls\InputTesting.mdf;Integrated Security=True";
-
 
         public void PopulateLoginTable(string username, string password)
         {

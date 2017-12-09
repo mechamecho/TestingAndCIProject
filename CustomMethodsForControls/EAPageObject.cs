@@ -101,15 +101,18 @@ namespace CustomMethodsForControls
             //The extended methods works directly on the IWebElement
             SelectTitle(title);
             TxtInitial.EnterText(initial);
-            TxtFirstName.EnterText(firstName);
-            TxtMiddleName.EnterText(middleName);
+            TxtFirstName.FormatInput(firstName);
+            TxtMiddleName.FormatInput(middleName);
             ClickGender(gender);
             ClickLanguage(languages);
 
             AddValuesToDatabase(languages);
+        }
 
+        public void FillAndSubmitUserForm(string title, string initial, string firstName, string middleName, string gender, string[] languages)
+        {
+            FillUserForm(title, initial, firstName, middleName, gender, languages);
             SubmitForm();
-
         }
 
         public void AddValuesToDatabase(string[] languages)
@@ -148,7 +151,7 @@ namespace CustomMethodsForControls
             dataentry.PopulateUserFormTable(TitleText, Initial, Firstname, Middlename, Gender, languages);
         }
 
-        private void SubmitForm()
+        public void SubmitForm()
         {
             BtnSave.Clicks();
 

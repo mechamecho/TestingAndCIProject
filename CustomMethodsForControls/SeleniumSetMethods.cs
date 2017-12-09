@@ -5,7 +5,12 @@ namespace CustomMethodsForControls
 {
     public static class SeleniumSetMethods
     {
-        
+        public static void FormatInput(this IWebElement element, string value)
+        {
+            
+            string UpperCaseData = value.ToUpper();
+            element.EnterText(UpperCaseData[0] + UpperCaseData.Substring(1).ToLower());
+        }
 
         /// <summary>
         /// Extended method for entering the text in the control
