@@ -12,10 +12,10 @@ namespace CustomMethodsForControls.Tests
     {
 
         //Initialize a LoginPageObject
-        LoginPageObject pageLogin;
+        LoginPageObject _pageLogin;
 
         //To initialize the languages array
-        string[] languages;
+        private string[] _languages;
 
         [SetUp]
         //opens the browser
@@ -24,52 +24,35 @@ namespace CustomMethodsForControls.Tests
             //Create reference for our browser
             PropertiesCollection.Driver = new ChromeDriver();
             //Maximizes the browsers window to full screen
+            Console.WriteLine("Maximizing browser screen");
             PropertiesCollection.Driver.Manage().Window.Maximize();
             //Navigate to Google page
+            Console.WriteLine(@"Navigating to URL 'http://executeautomation.com/demosite/Login.html'");
             PropertiesCollection.Driver.Navigate().GoToUrl("http://executeautomation.com/demosite/Login.html");
-            Console.WriteLine("Opened URL");
-            pageLogin = new LoginPageObject();
-            languages = new string[] { "English", "Hindi" };
-
-
+            _pageLogin = new LoginPageObject();
+            _languages = new[] { "English", "Hindi" };
         }
 
         [TestCaseSource(typeof(UsernameAndPasswordSource))]
 
-        public void FillLoginForm_Username_UsernameTextIsCorrect(string Username, string Password)
+        public void FillLoginForm_Username_UsernameTextIsCorrect(string username, string password)
         {
-            Console.WriteLine("Filling out the login form");
-            pageLogin.FillLoginForm(Username, Password);
-            string expectedUsername;
-            if (Username.Length <= 10)
-            {
-                expectedUsername = Username;
-            }
-            else
-            {
-                expectedUsername = Username.Substring(0, 10);
-            }
+            Console.WriteLine($"Filling out the login form with username:{username} and password:{password}");
+            _pageLogin.FillLoginForm(username, password);
+            var expectedUsername = username.Length <= 10 ? username : username.Substring(0, 10);
             
-            Assert.That(pageLogin.TxtUserName.GetText(), Is.EqualTo(expectedUsername));
+            Assert.That(_pageLogin.TxtUserName.GetText(), Is.EqualTo(expectedUsername));
 
         }
 
         [TestCaseSource(typeof(UsernameAndPasswordSource))]
-        public void FillLoginForm_Password_PasswordTextIsCorrect(string Username, string Password)
+        public void FillLoginForm_Password_PasswordTextIsCorrect(string username, string password)
         {
-            Console.WriteLine("Filling out the login form");
-            pageLogin.FillLoginForm(Username, Password);
-            string expectedPassword;
-            if (Password.Length <= 10)
-            {
-                expectedPassword = Password;
-            }
-            else
-            {
-                expectedPassword = Password.Substring(0, 10);
-            }
+            Console.WriteLine($"Filling out the login form with username: {username} and password:{password} ");
+            _pageLogin.FillLoginForm(username, password);
+            var expectedPassword = password.Length <= 10 ? password : password.Substring(0, 10);
 
-            Assert.That(pageLogin.TxtPassWord.GetText(), Is.EqualTo(expectedPassword));
+            Assert.That(_pageLogin.TxtPassWord.GetText(), Is.EqualTo(expectedPassword));
         }
 
 
@@ -77,8 +60,8 @@ namespace CustomMethodsForControls.Tests
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new string[] { "Nafissa", "somePassword" };
-                yield return new string[] { "Viktorius", "AnotherPassword with space" };
+                yield return new[] { "Nafissa", "somePassword" };
+                yield return new[] { "Viktorius", "AnotherPassword with space" };
             }
         }
 
@@ -86,24 +69,24 @@ namespace CustomMethodsForControls.Tests
         //Executes the tests 
         public void ExecuteTest()
         {
-            Console.WriteLine("Checking if the Login process and the filling out"+"" +
-                " of the user info process work over all");
+            Console.WriteLine("Checking if the Login process and the filling out"+
+                " of the user info process works over all");
             Console.WriteLine("Filling out Login form");
             //Login method returns an EAPage object.
-            pageLogin.Login("Nafissa", "some password").FillAndSubmitUserForm("Ms.", "VC", "Viktor", "mage", "male", languages);
+            _pageLogin.Login("Nafissa", "some password").FillAndSubmitUserForm("Ms.", "VC", "Viktor", "mage", "male", _languages);
             Console.WriteLine("Filled out Login form, then logged in, then filled out the User Info form, and clicked the save button");
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
 
-        public void FillUserForm_SetTitle_TitleIsCorrect(string Title, string initial, string firstname, string middlename, string gender)
+        public void FillUserForm_SetTitle_TitleIsCorrect(string title, string initial, string firstname, string middlename, string gender)
         {
             Console.WriteLine("Logging in");
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
-            eapage.FillAndSubmitUserForm(Title, initial, firstname, middlename, gender, languages);
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
             Console.WriteLine("Filled out the user form and submitted it");
             string actualTitle = eapage.DDLTitleID.GetTextFromDDL();
-            string expectedTitle = Title;
+            string expectedTitle = title;
             Console.WriteLine("Checking if the title that I chose, is the currently chosen title");
             Assert.That(expectedTitle, Is.EqualTo(actualTitle));
         }
@@ -112,21 +95,21 @@ namespace CustomMethodsForControls.Tests
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new string[] { "Ms.", "NH", "Nafissa", "Hassan", "female" };
-                yield return new string[] { "Mr.", "LC", "Louis", "Caballer", "Male" };
-                yield return new string[] { "Ms.", "MF", "Miss", "Fortune", "FeMale" };
-                yield return new string[] { "Mr.", "GC", "Graves", "Cigar", "Male" };
-                yield return new string[] { "Mr.", "MY", "Master", "Yi", "Male" };
+                yield return new[] { "Dr.", "NH", "Nafissa", "Hassan", "female" };
+                yield return new[] { "Mr.", "LC", "Louis", "Caballer", "Male" };
+                yield return new[] { "Ms.", "MF", "Miss", "Fortune", "FeMale" };
+                yield return new[] { "Mr.", "GC", "Graves", "Cigar", "Male" };
+                yield return new[] { "Mr.", "MY", "Master", "Yi", "Male" };
             }
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
 
-        public void FillUserForm_SetInitial_initialIsCorrect(string Title, string initial, string firstname, string middlename, string gender)
+        public void FillUserForm_SetInitial_initialIsCorrect(string title, string initial, string firstname, string middlename, string gender)
         {
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm(Title, initial, firstname, middlename, gender, languages);
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
             Console.WriteLine("Filled out the user form and submitted it");
             string actualInitial = eapage.TxtInitial.GetText();
             string expectedInitial = initial;
@@ -136,39 +119,39 @@ namespace CustomMethodsForControls.Tests
 
         [TestCaseSource(typeof(UserFormInputs))]
 
-        public void FillUserForm_SetfirstName_firstNameIsCorrect(string Title, string initial, string firstname, string middlename, string gender)
+        public void FillUserForm_SetfirstName_firstNameIsCorrect(string title, string initial, string firstname, string middlename, string gender)
         {
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm(Title, initial, firstname, middlename, gender, languages);
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
             Console.WriteLine("Filled out the user form, and submitted it");
-            string actualFirstName = eapage.TxtFirstName.GetText();
-            string expectedFirstName = firstname;
+            var actualFirstName = eapage.TxtFirstName.GetText();
+            var expectedFirstName = firstname;
             Console.WriteLine("Checking if the firstname given matches the currently saved firstname");
             Assert.That(expectedFirstName, Is.EqualTo(actualFirstName));
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
 
-        public void FillUserForm_SetMiddleName_MiddleNameIsCorrect(string Title, string initial, string firstname, string middlename, string gender)
+        public void FillUserForm_SetMiddleName_MiddleNameIsCorrect(string title, string initial, string firstname, string middlename, string gender)
         {
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm(Title, initial, firstname, middlename, gender, languages);
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
             Console.WriteLine("Filled out the user form, and submitted it");
-            string actualMiddleName = eapage.TxtMiddleName.GetText();
-            string expectedMiddleName = middlename;
+            var actualMiddleName = eapage.TxtMiddleName.GetText();
+            var expectedMiddleName = middlename;
             Console.WriteLine("Checking if the middlename given matches the currently saved middlename");
             Assert.That(expectedMiddleName, Is.EqualTo(actualMiddleName));
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
 
-        public void FillUserForm_SetGender_GenderIsCorrect(string Title, string initial, string firstname, string middlename, string gender)
+        public void FillUserForm_SetGender_GenderIsCorrect(string title, string initial, string firstname, string middlename, string gender)
         {
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm(Title, initial, firstname, middlename, gender, languages);
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
             Console.WriteLine("Filled out the user form, and submitted it");
             string actualGender;
             if (eapage.GenderFemaleChoice.Selected)
@@ -182,7 +165,7 @@ namespace CustomMethodsForControls.Tests
                 Console.WriteLine("else, if the female gender button wasn't selected, the expected gender will be male");
                 actualGender = eapage.GenderMaleChoice.GetText();
             }
-            string expectedGender = gender.ToLower();
+            var expectedGender = gender.ToLower();
             Console.WriteLine("Asserting that the currently saved gender, and the expected gender resulting from the if statement are equal");
             Assert.That(expectedGender, Is.EqualTo(actualGender));
         }
@@ -191,13 +174,13 @@ namespace CustomMethodsForControls.Tests
 
         public void FillUserForm_SetLangugae_LanguageIsCorrectEnglish(string firstlanguage, string secondlanguage)
         {
-            languages[0] = firstlanguage;
-            languages[1] = secondlanguage;
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
+            _languages[0] = firstlanguage;
+            _languages[1] = secondlanguage;
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan" , "Female", languages);
+            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan" , "Female", _languages);
             Console.WriteLine("Filled out the User information form and submitted");
-            if (languages[0].ToLower().Equals("english"))
+            if (_languages[0].ToLower().Equals("english"))
             {
                 Console.WriteLine("Asserting that if the languages array contains english, "+
                     "the english checkbox must be selected");
@@ -214,10 +197,10 @@ namespace CustomMethodsForControls.Tests
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new string[] { "english", "hindi" };
-                yield return new string[] { "", ""};
-                yield return new string[] { "", "hindi" };
-                yield return new string[] { "english", "" };
+                yield return new[] { "english", "hindi" };
+                yield return new[] { "", ""};
+                yield return new[] { "", "hindi" };
+                yield return new[] { "english", "" };
             }
         }
 
@@ -225,12 +208,12 @@ namespace CustomMethodsForControls.Tests
 
         public void FillUserForm_SetLanguage_LanguageIsCorrectHindi(string firstlanguage, string secondlanguage)
         {
-            languages[0] = firstlanguage;
-            languages[1] = secondlanguage;
-            EAPageObject eapage = pageLogin.Login("Nafissa", "Password");
-            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan", "Female", languages);
+            _languages[0] = firstlanguage;
+            _languages[1] = secondlanguage;
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
+            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan", "Female", _languages);
 
-            if (languages[1].ToLower().Equals("hindi"))
+            if (_languages[1].ToLower().Equals("hindi"))
             {
                 Console.WriteLine("Asserting that if the languages array contains hindi, " +
     "the hindi checkbox must be selected");

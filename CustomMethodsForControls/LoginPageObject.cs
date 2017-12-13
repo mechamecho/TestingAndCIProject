@@ -48,9 +48,6 @@ namespace CustomMethodsForControls
             string PasswordText = TxtPassWord.GetText();
 
             dataentry.PopulateLoginTable(UsernameText, PasswordText);
-
-
-
         }
 
         public EAPageObject ClickLoginBtn()

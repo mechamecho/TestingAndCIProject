@@ -7,14 +7,9 @@ using OpenQA.Selenium;
 
 namespace CustomMethodsForControls
 {
-
-
     public static class PropertiesCollection
     {
-
-
         //Auto-implmented Property
         public static IWebDriver Driver { get; set; }
-
     }
 }
