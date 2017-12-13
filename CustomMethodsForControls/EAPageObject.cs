@@ -60,6 +60,8 @@ namespace CustomMethodsForControls
                 case ("ms."):
                     DDLTitleID.SelectDropDown("Ms.");
                     break;
+                default:
+                    throw new Exception("This title is not available for selection");
 
             }
         }
