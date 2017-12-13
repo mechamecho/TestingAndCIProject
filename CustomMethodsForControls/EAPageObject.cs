@@ -51,19 +51,19 @@ namespace CustomMethodsForControls
         //To select the title
         public void SelectTitle(string title)
         {
-            switch (title.ToLower())
-            {
-                case ("mr."):
-                    DDLTitleID.SelectDropDown("Mr.");
-                    break;
 
-                case ("ms."):
-                    DDLTitleID.SelectDropDown("Ms.");
-                    break;
-                default:
-                    throw new Exception("This title is not available for selection");
+                switch (title.ToLower())
+                {
+                    case ("mr."):
+                        DDLTitleID.SelectDropDown("Mr.");
+                        break;
 
-            }
+                    case ("ms."):
+                        DDLTitleID.SelectDropDown("Ms.");
+                        break;
+                }
+            
+          
         }
 
         //To click the Gender RadioButton
@@ -90,11 +90,11 @@ namespace CustomMethodsForControls
             {
                 EnglishCheckbox.Clicks();
             }
-                if(languages[1].ToLower().Equals("hindi"))
-                {
+            if(languages[1].ToLower().Equals("hindi"))
+            {
 
                         HindiCheckbox.Clicks();
-                }
+            }
 
         }
 

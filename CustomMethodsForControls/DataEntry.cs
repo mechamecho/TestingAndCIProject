@@ -31,7 +31,7 @@ namespace CustomMethodsForControls
 
         public void PopulateUserFormTable(string title, string initial, string firstname, string middlename, string gender, string [] languages)
         {
-            string query = "INSERT INTO UserForm (Title, Initials, Firstname, MiddleName, Gender, Language1, Language2)"+"" +
+            string query = "INSERT INTO UserForm (Title, Initials, Firstname, MiddleName, Gender, Language1, Language2)" +""+
                 "VALUES(@Title, @Initial, @Firstname, @Middlename,@Gender, @Language1, @Language2)";
             using (connection = new SqlConnection(ConnectionString))
             using (SqlCommand command = new SqlCommand(query, connection))

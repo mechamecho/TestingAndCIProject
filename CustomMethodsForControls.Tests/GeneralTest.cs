@@ -95,7 +95,7 @@ namespace CustomMethodsForControls.Tests
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new[] { "Dr.", "NH", "Nafissa", "Hassan", "female" };
+                yield return new[] { "Mr.", "NH", "Nafissa", "Hassan", "female" };
                 yield return new[] { "Mr.", "LC", "Louis", "Caballer", "Male" };
                 yield return new[] { "Ms.", "MF", "Miss", "Fortune", "FeMale" };
                 yield return new[] { "Mr.", "GC", "Graves", "Cigar", "Male" };
@@ -211,7 +211,7 @@ namespace CustomMethodsForControls.Tests
             _languages[0] = firstlanguage;
             _languages[1] = secondlanguage;
             EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
-            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan", "Female", _languages);
+            eapage.FillAndSubmitUserForm("Ms.", "NH", "Nafissa", "Hassan", "Female", _languages);
 
             if (_languages[1].ToLower().Equals("hindi"))
             {
