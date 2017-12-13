@@ -13,7 +13,7 @@ namespace CustomMethodsForControls
         }
 
          SqlConnection connection;
-         string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Engineer\Desktop\TestingAndCIProject\CustomMethodsForControls\InputTesting.mdf;Integrated Security=True";
+         string ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Program Files (x86)\Jenkins\workspace\MySeleniumProject\CustomMethodsForControls\InputTesting.mdf;Integrated Security=True";
 
         public void PopulateLoginTable(string username, string password)
         {
