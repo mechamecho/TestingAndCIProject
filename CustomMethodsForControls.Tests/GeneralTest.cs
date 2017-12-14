@@ -88,14 +88,14 @@ namespace CustomMethodsForControls.Tests
             string actualTitle = eapage.DDLTitleID.GetTextFromDDL();
             string expectedTitle = title;
             Console.WriteLine("Checking if the title that I chose, is the currently chosen title");
-            Assert.That(expectedTitle, Is.EqualTo(actualTitle));
+            Assert.That(actualTitle, Is.EqualTo(expectedTitle));
         }
 
         public class UserFormInputs : IEnumerable
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new[] { "Mr.", "NH", "Nafissa", "Hassan", "female" };
+                yield return new[] { "Dr.", "NH", "Nafissa", "Hassan", "female" };
                 yield return new[] { "Mr.", "LC", "Louis", "Caballer", "Male" };
                 yield return new[] { "Ms.", "MF", "Miss", "Fortune", "FeMale" };
                 yield return new[] { "Mr.", "GC", "Graves", "Cigar", "Male" };
@@ -114,7 +114,7 @@ namespace CustomMethodsForControls.Tests
             string actualInitial = eapage.TxtInitial.GetText();
             string expectedInitial = initial;
             Console.WriteLine("Checking if given input initials, and current saved input initials are equal");
-            Assert.That(expectedInitial, Is.EqualTo(actualInitial));
+            Assert.That(actualInitial, Is.EqualTo(expectedInitial));
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
@@ -128,7 +128,7 @@ namespace CustomMethodsForControls.Tests
             var actualFirstName = eapage.TxtFirstName.GetText();
             var expectedFirstName = firstname;
             Console.WriteLine("Checking if the firstname given matches the currently saved firstname");
-            Assert.That(expectedFirstName, Is.EqualTo(actualFirstName));
+            Assert.That(actualFirstName, Is.EqualTo(expectedFirstName));
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
@@ -142,7 +142,7 @@ namespace CustomMethodsForControls.Tests
             var actualMiddleName = eapage.TxtMiddleName.GetText();
             var expectedMiddleName = middlename;
             Console.WriteLine("Checking if the middlename given matches the currently saved middlename");
-            Assert.That(expectedMiddleName, Is.EqualTo(actualMiddleName));
+            Assert.That(actualMiddleName, Is.EqualTo(expectedMiddleName));
         }
 
         [TestCaseSource(typeof(UserFormInputs))]
@@ -167,7 +167,7 @@ namespace CustomMethodsForControls.Tests
             }
             var expectedGender = gender.ToLower();
             Console.WriteLine("Asserting that the currently saved gender, and the expected gender resulting from the if statement are equal");
-            Assert.That(expectedGender, Is.EqualTo(actualGender));
+            Assert.That(actualGender, Is.EqualTo(expectedGender));
         }
 
         [TestCaseSource(typeof(LanguagesInput))]
