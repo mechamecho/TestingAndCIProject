@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
+using System.Collections.Generic;
 
 namespace CustomMethodsForControls
 {
@@ -12,6 +13,7 @@ namespace CustomMethodsForControls
         {
             //To initialize the instance of this class(Page) and populate it with the given elements(properties of this class)
             PageFactory.InitElements(PropertiesCollection.Driver, this);
+            RadioElements = new List<IWebElement>();
         }
 
 
@@ -37,11 +39,15 @@ namespace CustomMethodsForControls
         [FindsBy(How = How.Name, Using = "Female")]
         public IWebElement GenderFemaleChoice { get; set; }
 
+        public List<IWebElement> RadioElements;
+
         [FindsBy(How = How.Name, Using = "english")]
         public IWebElement EnglishCheckbox { get; set; }
 
         [FindsBy(How = How.Name, Using = "Hindi")]
         public IWebElement HindiCheckbox { get; set; }
+
+
 
         //To select the title
         public void SelectTitle(string title)
@@ -67,15 +73,24 @@ namespace CustomMethodsForControls
             switch (gender.ToLower())
             {
                 case ("male"):
-                    GenderMaleChoice.Clicks();
+                    GenderMaleChoice.Click();
                     break;
 
                 case ("female"):
-                    GenderFemaleChoice.Clicks();
+                    GenderFemaleChoice.Click();
                     break;
             }
+
+            AddSelectedRadioElements();
         }
 
+        private void AddSelectedRadioElements()
+        {
+            if (GenderFemaleChoice.Selected)
+                RadioElements.Add(GenderFemaleChoice);
+            if (GenderMaleChoice.Selected)
+                RadioElements.Add(GenderMaleChoice);
+        }
 
         //To click the Languages checkboxes
         public void ClickLanguage(string[] languages)

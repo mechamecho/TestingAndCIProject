@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using OpenQA.Selenium.Chrome;
+using System;
+using System.Collections;
 
 namespace CustomMethodsForControls.Tests
 {
     [TestFixture]
 
-    
+
     public class GeneralTest
     {
 
@@ -40,7 +40,7 @@ namespace CustomMethodsForControls.Tests
             Console.WriteLine($"Filling out the login form with username:{username} and password:{password}");
             _pageLogin.FillLoginForm(username, password);
             var expectedUsername = username.Length <= 10 ? username : username.Substring(0, 10);
-            
+
             Assert.That(_pageLogin.TxtUserName.GetText(), Is.EqualTo(expectedUsername));
 
         }
@@ -69,7 +69,7 @@ namespace CustomMethodsForControls.Tests
         //Executes the tests 
         public void ExecuteTest()
         {
-            Console.WriteLine("Checking if the Login process and the filling out"+
+            Console.WriteLine("Checking if the Login process and the filling out" +
                 " of the user info process works over all");
             Console.WriteLine("Filling out Login form");
             //Login method returns an EAPage object.
@@ -183,7 +183,7 @@ namespace CustomMethodsForControls.Tests
             string actualGender;
             if (eapage.GenderFemaleChoice.Selected)
             {
-                Console.WriteLine("Checking if the the female radio button was selected, if it was that will be the expected gender"+
+                Console.WriteLine("Checking if the the female radio button was selected, if it was that will be the expected gender" +
                     "due to the bug on the page that allows users to select both buttons");
                 actualGender = eapage.GenderFemaleChoice.GetText();
             }
@@ -197,6 +197,15 @@ namespace CustomMethodsForControls.Tests
             Assert.That(actualGender, Is.EqualTo(expectedGender));
         }
 
+        [TestCaseSource(typeof(UserFormInputs))]
+        public void FillUserForm_SetGender_OnlyOneGenderIsSelected(string title, string initial, string firstname, string middlename, string gender)
+        {
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
+            Console.WriteLine(eapage.RadioElements.Count);
+            Assert.That(eapage.RadioElements.Count, Is.EqualTo(1));
+        }
+
         [TestCaseSource(typeof(LanguagesInput))]
 
         public void FillUserForm_SetLangugae_LanguageIsCorrectEnglish(string firstlanguage, string secondlanguage)
@@ -205,11 +214,11 @@ namespace CustomMethodsForControls.Tests
             _languages[1] = secondlanguage;
             EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
             Console.WriteLine("Logged in");
-            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan" , "Female", _languages);
+            eapage.FillAndSubmitUserForm("Mrs.", "NH", "Nafissa", "Hassan", "Female", _languages);
             Console.WriteLine("Filled out the User information form and submitted");
             if (_languages[0].ToLower().Equals("english"))
             {
-                Console.WriteLine("Asserting that if the languages array contains english, "+
+                Console.WriteLine("Asserting that if the languages array contains english, " +
                     "the english checkbox must be selected");
                 Assert.That(eapage.EnglishCheckbox.Selected, Is.True);
             }
@@ -225,7 +234,7 @@ namespace CustomMethodsForControls.Tests
             public IEnumerator GetEnumerator()
             {
                 yield return new[] { "english", "hindi" };
-                yield return new[] { "", ""};
+                yield return new[] { "", "" };
                 yield return new[] { "", "hindi" };
                 yield return new[] { "english", "" };
             }
@@ -243,7 +252,7 @@ namespace CustomMethodsForControls.Tests
             if (_languages[1].ToLower().Equals("hindi"))
             {
                 Console.WriteLine("Asserting that if the languages array contains hindi, " +
-    "the hindi checkbox must be selected");
+                "the hindi checkbox must be selected");
                 Assert.That(eapage.HindiCheckbox.Selected, Is.True);
             }
             else
@@ -252,10 +261,6 @@ namespace CustomMethodsForControls.Tests
                 Assert.That(eapage.HindiCheckbox.Selected, Is.False);
             }
         }
-
-
-
-
 
         [TearDown]
         //Closes the browser
