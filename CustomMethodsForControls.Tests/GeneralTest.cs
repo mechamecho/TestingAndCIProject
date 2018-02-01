@@ -25,7 +25,7 @@ namespace CustomMethodsForControls.Tests
             PropertiesCollection.Driver = new ChromeDriver();
             //Maximizes the browsers window to full screen
             Console.WriteLine("Maximizing browser screen");
-            PropertiesCollection.Driver.Manage().Window.Maximize();
+            PropertiesCollection.Driver.Manage();
             //Navigate to Google page
             Console.WriteLine(@"Navigating to URL 'http://executeautomation.com/demosite/Login.html'");
             PropertiesCollection.Driver.Navigate().GoToUrl("http://executeautomation.com/demosite/Login.html");
@@ -91,15 +91,42 @@ namespace CustomMethodsForControls.Tests
             Assert.That(actualTitle, Is.EqualTo(expectedTitle));
         }
 
+        [TestCaseSource(typeof(UserFormBadTitles))]
+
+        public void FillUserForm_SetWrongTitle_TitleIsSelect(string title, string initial, string firstname, string middlename, string gender)
+        {
+            Console.WriteLine("Logging in");
+            EAPageObject eapage = _pageLogin.Login("Nafissa", "Password");
+            eapage.FillAndSubmitUserForm(title, initial, firstname, middlename, gender, _languages);
+            Console.WriteLine("Filled out the user form and submitted it");
+            string actualTitle = eapage.DDLTitleID.GetTextFromDDL();
+            string expectedTitle = "Select";
+            Console.WriteLine("Checking if the title that I chose, is the currently chosen title");
+            Assert.That(actualTitle, Is.EqualTo(expectedTitle));
+        }
+
+
         public class UserFormInputs : IEnumerable
         {
             public IEnumerator GetEnumerator()
             {
-                yield return new[] { "Dr.", "NH", "Nafissa", "Hassan", "female" };
+                yield return new[] { "Ms.", "NH", "Nafissa", "Hassan", "female" };
                 yield return new[] { "Mr.", "LC", "Louis", "Caballer", "Male" };
                 yield return new[] { "Ms.", "MF", "Miss", "Fortune", "FeMale" };
                 yield return new[] { "Mr.", "GC", "Graves", "Cigar", "Male" };
                 yield return new[] { "Mr.", "MY", "Master", "Yi", "Male" };
+            }
+        }
+
+        public class UserFormBadTitles : IEnumerable
+        {
+            public IEnumerator GetEnumerator()
+            {
+                yield return new[] { "Dr.", "NH", "Nafissa", "Hassan", "female" };
+                yield return new[] { "Prof.", "LC", "Louis", "Caballer", "Male" };
+                yield return new[] { "23", "MF", "Miss", "Fortune", "FeMale" };
+                yield return new[] { "HEY", "GC", "Graves", "Cigar", "Male" };
+                yield return new[] { "Fake", "MY", "Master", "Yi", "Male" };
             }
         }
 

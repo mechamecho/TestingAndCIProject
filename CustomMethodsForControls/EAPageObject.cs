@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.PageObjects;
 
 namespace CustomMethodsForControls
@@ -21,10 +16,10 @@ namespace CustomMethodsForControls
 
 
         //To identify the title element
-        [FindsBy(How=How.Id, Using ="TitleId")]
+        [FindsBy(How = How.Id, Using = "TitleId")]
         public IWebElement DDLTitleID { get; set; }
 
-        [FindsBy(How=How.Name, Using ="Initial")]
+        [FindsBy(How = How.Name, Using = "Initial")]
         public IWebElement TxtInitial { get; set; }
 
         [FindsBy(How = How.Name, Using = "FirstName")]
@@ -52,18 +47,18 @@ namespace CustomMethodsForControls
         public void SelectTitle(string title)
         {
 
-                switch (title.ToLower())
-                {
-                    case ("mr."):
-                        DDLTitleID.SelectDropDown("Mr.");
-                        break;
+            switch (title.ToLower())
+            {
+                case ("mr."):
+                    DDLTitleID.SelectDropDown("Mr.");
+                    break;
 
-                    case ("ms."):
-                        DDLTitleID.SelectDropDown("Ms.");
-                        break;
-                }
-            
-          
+                case ("ms."):
+                    DDLTitleID.SelectDropDown("Ms.");
+                    break;
+            }
+
+
         }
 
         //To click the Gender RadioButton
@@ -90,15 +85,15 @@ namespace CustomMethodsForControls
             {
                 EnglishCheckbox.Clicks();
             }
-            if(languages[1].ToLower().Equals("hindi"))
+            if (languages[1].ToLower().Equals("hindi"))
             {
 
-                        HindiCheckbox.Clicks();
+                HindiCheckbox.Clicks();
             }
 
         }
 
-        public void FillUserForm(string title, string initial, string firstName, string middleName, string gender, string [] languages)
+        public void FillUserForm(string title, string initial, string firstName, string middleName, string gender, string[] languages)
         {
             //The extended methods works directly on the IWebElement
             SelectTitle(title);
